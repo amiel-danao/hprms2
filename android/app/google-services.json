@@ -1,56 +1,48 @@
 {
   "project_info": {
-    "project_number": "119535848870",
-    "project_id": "agriculturescan",
-    "storage_bucket": "agriculturescan.appspot.com"
+    "project_number": "240112734151",
+    "project_id": "hprms-848cf",
+    "storage_bucket": "hprms-848cf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:119535848870:android:cab159dd91dc940786d367",
+        "mobilesdk_app_id": "1:240112734151:android:5f805383f557aa17f853e2",
         "android_client_info": {
-          "package_name": "com.thesis.amaff"
+          "package_name": "com.thesis.hprms"
         }
       },
       "oauth_client": [
         {
-          "client_id": "119535848870-41kcv5nf5vf1fj3e5pf0d392qnhl6osv.apps.googleusercontent.com",
+          "client_id": "240112734151-olhk2qh1r84ahqgd824kcc1uab0kge3l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.thesis.amaff",
+            "package_name": "com.thesis.hprms",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
         {
-          "client_id": "119535848870-tapq0ub80ilrv836sj61j969o4h4qjtu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.thesis.amaff",
-            "certificate_hash": "1aaf6b7f8f5247addb3f68644e5203eee5fb886c"
-          }
-        },
-        {
-          "client_id": "119535848870-ef1as0eo3m8mq2l04ffj24tlntd0p8ep.apps.googleusercontent.com",
+          "client_id": "240112734151-9seuhde0c6r4l03cprpm2ho9uecd1hqb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJ95pmt6BFK_VRqU_iw9BftEXvvlo5Tv0"
+          "current_key": "AIzaSyBpZ6l705KoUENtxoRzG7kjNp5_7mVBVkg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "119535848870-ef1as0eo3m8mq2l04ffj24tlntd0p8ep.apps.googleusercontent.com",
+              "client_id": "240112734151-9seuhde0c6r4l03cprpm2ho9uecd1hqb.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "119535848870-4136b2cnvnhd9fqgrugk5grmfkdbrgui.apps.googleusercontent.com",
+              "client_id": "240112734151-q61vsssu5mds0jf1fdkdqumg0h4h7ubc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.thesis.amaff"
+                "bundle_id": "com.thesis.hprms"
               }
             }
           ]

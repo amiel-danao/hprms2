@@ -1,3 +1,50 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "appointments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "appointmentPerson",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "appointmentTime",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "appointments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "appointmentPerson",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "appointmentTime",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "appointments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "doctor",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "appointmentTime",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
 }

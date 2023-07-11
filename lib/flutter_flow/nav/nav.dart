@@ -1,15 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../create_user/create_user_widget.dart';
+import '../flutter_flow_theme.dart';
 import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
 import '../../index.dart';
 import '../../main.dart';
+import '../lat_lng.dart';
+import '../place.dart';
 import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -50,10 +53,13 @@ class AppStateNotifier extends ChangeNotifier {
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
   void update(BaseAuthUser newUser) {
+    final shouldUpdate =
+        user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
-    if (notifyOnAuthChange) {
+    // No need to update unless the user has changed.
+    if (notifyOnAuthChange && shouldUpdate) {
       notifyListeners();
     }
     // Once again mark the notifier as needing to update on auth change
@@ -72,104 +78,136 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : PhoneSignInWidget(),
+          appStateNotifier.loggedIn ? HomePageWidget() : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : PhoneSignInWidget(),
-          routes: [
-            FFRoute(
-              name: 'forgotPassword',
-              path: 'forgotPassword',
-              builder: (context, params) => ForgotPasswordWidget(),
-            ),
-            FFRoute(
-              name: 'phoneSignIn',
-              path: 'phoneSignIn',
-              builder: (context, params) => PhoneSignInWidget(),
-            ),
-            FFRoute(
-              name: 'phoneVerify',
-              path: 'phoneVerify',
-              builder: (context, params) => PhoneVerifyWidget(),
-            ),
-            FFRoute(
-              name: 'users',
-              path: 'users',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'users')
-                  : UsersWidget(),
-            ),
-            FFRoute(
-              name: 'cropsPage',
-              path: 'cropsPage',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'cropsPage')
-                  : CropsPageWidget(),
-            ),
-            FFRoute(
-              name: 'homePage',
-              path: 'homePage',
-              requireAuth: true,
-              asyncParams: {
-                'customerCount':
-                    getDocList(['users'], UsersRecord.fromSnapshot),
-                'maleCount': getDocList(['users'], UsersRecord.fromSnapshot),
-              },
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'homePage')
-                  : HomePageWidget(),
-            ),
-            FFRoute(
-              name: 'customersPage',
-              path: 'customers',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'customersPage')
-                  : CustomersPageWidget(),
-            ),
-            FFRoute(
-              name: 'CreateUser',
-              path: 'createUser',
-              requireAuth: true,
-              asyncParams: {
-                'userToEdit': getDoc(['users'], UsersRecord.fromSnapshot),
-              },
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'CreateUser')
-                  : CreateUserWidget(
-                      userToEdit:
-                          params.getParam('userToEdit', ParamType.Document),
-                    ),
-            ),
-            FFRoute(
-              name: 'CreateCrop',
-              path: 'createCrop',
-              requireAuth: true,
-              asyncParams: {
-                'cropToEdit': getDoc(['Crops'], CropsRecord.fromSnapshot),
-              },
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'CreateCrop')
-                  : CreateCropWidget(
-                      cropToEdit:
-                          params.getParam('cropToEdit', ParamType.Document),
-                    ),
-            ),
-            FFRoute(
-              name: 'settingsPage',
-              path: 'settingsPage',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'settingsPage')
-                  : SettingsPageWidget(),
-            )
-          ].map((r) => r.toRoute(appStateNotifier)).toList(),
+              appStateNotifier.loggedIn ? HomePageWidget() : LoginPageWidget(),
         ),
+        FFRoute(
+          name: 'loginPage',
+          path: '/loginPage',
+          builder: (context, params) => LoginPageWidget(),
+        ),
+        FFRoute(
+          name: 'completeProfile',
+          path: '/completeProfile',
+          builder: (context, params) => CompleteProfileWidget(),
+        ),
+        FFRoute(
+          name: 'forgotPassword',
+          path: '/forgotPassword',
+          builder: (context, params) => ForgotPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'addAnotherProfile',
+          path: '/addAnotherProfile',
+          builder: (context, params) => AddAnotherProfileWidget(),
+        ),
+        FFRoute(
+          name: 'homePage',
+          path: '/homePage',
+          requireAuth: true,
+          builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: 'myAppointments',
+          path: '/myAppointments',
+          requireAuth: true,
+          builder: (context, params) => MyAppointmentsWidget(),
+        ),
+        FFRoute(
+          name: 'appointmentDetails',
+          path: '/appointmentDetails',
+          builder: (context, params) => AppointmentDetailsWidget(
+            appointmentDetails: params.getParam('appointmentDetails',
+                ParamType.DocumentReference, false, ['appointments']),
+          ),
+        ),
+        FFRoute(
+          name: 'profilePage',
+          path: '/profilePage',
+          builder: (context, params) => ProfilePageWidget(
+            userProfile: params.getParam(
+                'userProfile', ParamType.DocumentReference, false, ['users']),
+          ),
+        ),
+        FFRoute(
+          name: 'editProfile',
+          path: '/editProfile',
+          builder: (context, params) => EditProfileWidget(
+            userProfile: params.getParam(
+                'userProfile', ParamType.DocumentReference, false, ['users']),
+          ),
+        ),
+        FFRoute(
+          name: 'findSymptoms',
+          path: '/findSymptoms',
+          builder: (context, params) => FindSymptomsWidget(),
+        ),
+        FFRoute(
+          name: 'appointmentDetailsProfile',
+          path: '/appointmentDetailsProfile',
+          builder: (context, params) => AppointmentDetailsProfileWidget(
+            appointmentDetails: params.getParam('appointmentDetails',
+                ParamType.DocumentReference, false, ['appointments']),
+          ),
+        ),
+        FFRoute(
+          name: 'doctorsPage',
+          path: '/doctorsPage',
+          builder: (context, params) => DoctorsPageWidget(),
+        ),
+        FFRoute(
+          name: 'editDoctor',
+          path: '/editDoctor',
+          asyncParams: {
+            'userToEdit': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => EditDoctorWidget(
+            userToEdit: params.getParam('userToEdit', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'patientsPage',
+          path: '/patientsPage',
+          requireAuth: true,
+          builder: (context, params) => PatientsPageWidget(),
+        ),
+        FFRoute(
+          name: 'mySchedule',
+          path: '/mySchedule',
+          requireAuth: true,
+          builder: (context, params) => MyScheduleWidget(),
+        ),
+        FFRoute(
+          name: 'fecalysisForm',
+          path: '/fecalysisForm',
+          requireAuth: true,
+          asyncParams: {
+            'recordToEdit': getDoc(['fecalysis'], FecalysisRecord.fromSnapshot),
+          },
+          builder: (context, params) => FecalysisFormWidget(
+            appointment: params.getParam('appointment',
+                ParamType.DocumentReference, false, ['appointments']),
+            recordToEdit: params.getParam('recordToEdit', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'dentalForm',
+          path: '/dentalForm',
+          requireAuth: true,
+          asyncParams: {
+            'recordToEdit': getDoc(['dental'], DentalRecord.fromSnapshot),
+          },
+          builder: (context, params) => DentalFormWidget(
+            appointment: params.getParam('appointment',
+                ParamType.DocumentReference, false, ['appointments']),
+            recordToEdit: params.getParam('recordToEdit', ParamType.Document),
+          ),
+        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -335,7 +373,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/phoneSignIn';
+            return '/loginPage';
           }
           return null;
         },
@@ -351,7 +389,7 @@ class FFRoute {
               ? Container(
                   color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/logo-1640827546.png',
                     fit: BoxFit.none,
                   ),
                 )

@@ -5,12 +5,13 @@ Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-            apiKey: "AIzaSyDdEJh8oov5qJl53BjoPuEVOkceXsvKDoU",
-            authDomain: "agriculturescan.firebaseapp.com",
-            projectId: "agriculturescan",
-            storageBucket: "agriculturescan.appspot.com",
-            messagingSenderId: "119535848870",
-            appId: "1:119535848870:web:2237cbbcbc520e4686d367"));
+            apiKey: "AIzaSyDuRAiMJVWjtSw1M4fbOmhnP8anHrG3ZRY",
+            authDomain: "hprms-848cf.firebaseapp.com",
+            projectId: "hprms-848cf",
+            storageBucket: "hprms-848cf.appspot.com",
+            messagingSenderId: "240112734151",
+            appId: "1:240112734151:web:51897eb64d0bb7dbf853e2",
+            measurementId: "G-X470NR9X9S"));
   } else {
     await Firebase.initializeApp();
   }

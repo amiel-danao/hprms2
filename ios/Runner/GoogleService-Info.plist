@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>119535848870-4136b2cnvnhd9fqgrugk5grmfkdbrgui.apps.googleusercontent.com</string>
+	<string>240112734151-q61vsssu5mds0jf1fdkdqumg0h4h7ubc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.119535848870-4136b2cnvnhd9fqgrugk5grmfkdbrgui</string>
+	<string>com.googleusercontent.apps.240112734151-q61vsssu5mds0jf1fdkdqumg0h4h7ubc</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>119535848870-41kcv5nf5vf1fj3e5pf0d392qnhl6osv.apps.googleusercontent.com</string>
+	<string>240112734151-olhk2qh1r84ahqgd824kcc1uab0kge3l.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCGeN1UISQMf2InBBE01bGI7Jq4WQpI9H8</string>
+	<string>AIzaSyAtFYX2Xv-hLUp4dpFdmaayLLHQFG35nX4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>119535848870</string>
+	<string>240112734151</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.thesis.amaff</string>
+	<string>com.thesis.hprms</string>
 	<key>PROJECT_ID</key>
-	<string>agriculturescan</string>
+	<string>hprms-848cf</string>
 	<key>STORAGE_BUCKET</key>
-	<string>agriculturescan.appspot.com</string>
+	<string>hprms-848cf.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:119535848870:ios:e40e8eb645b381c686d367</string>
+	<string>1:240112734151:ios:8b856f1dc0d80aa1f853e2</string>
 </dict>
 </plist>

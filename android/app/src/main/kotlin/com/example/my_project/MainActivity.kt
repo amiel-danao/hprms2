@@ -1,4 +1,4 @@
-package com.thesis.amaff
+package com.thesis.hprms
 
 import io.flutter.embedding.android.FlutterActivity
 

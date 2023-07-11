@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class UsersRecord extends FirestoreRecord {
   UsersRecord._(
@@ -18,44 +21,92 @@ class UsersRecord extends FirestoreRecord {
   String get displayName => _displayName ?? '';
   bool hasDisplayName() => _displayName != null;
 
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
+
+  // "password" field.
+  String? _password;
+  String get password => _password ?? '';
+  bool hasPassword() => _password != null;
+
   // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
-  // "created_time" field.
-  DateTime? _createdTime;
-  DateTime? get createdTime => _createdTime;
-  bool hasCreatedTime() => _createdTime != null;
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
+
+  // "ailments" field.
+  String? _ailments;
+  String get ailments => _ailments ?? '';
+  bool hasAilments() => _ailments != null;
+
+  // "location" field.
+  LatLng? _location;
+  LatLng? get location => _location;
+  bool hasLocation() => _location != null;
 
   // "phone_number" field.
   String? _phoneNumber;
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
-  // "email" field.
-  String? _email;
-  String get email => _email ?? '';
-  bool hasEmail() => _email != null;
-
   // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
-  // "gender" field.
-  String? _gender;
-  String get gender => _gender ?? '';
-  bool hasGender() => _gender != null;
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
+
+  // "userSex" field.
+  String? _userSex;
+  String get userSex => _userSex ?? '';
+  bool hasUserSex() => _userSex != null;
+
+  // "type" field.
+  int? _type;
+  int get type => _type ?? 0;
+  bool hasType() => _type != null;
+
+  // "first_name" field.
+  String? _firstName;
+  String get firstName => _firstName ?? '';
+  bool hasFirstName() => _firstName != null;
+
+  // "last_name" field.
+  String? _lastName;
+  String get lastName => _lastName ?? '';
+  bool hasLastName() => _lastName != null;
+
+  // "specialization" field.
+  List<String>? _specialization;
+  List<String> get specialization => _specialization ?? const [];
+  bool hasSpecialization() => _specialization != null;
 
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
-    _uid = snapshotData['uid'] as String?;
-    _createdTime = snapshotData['created_time'] as DateTime?;
-    _phoneNumber = snapshotData['phone_number'] as String?;
     _email = snapshotData['email'] as String?;
+    _password = snapshotData['password'] as String?;
+    _uid = snapshotData['uid'] as String?;
+    _age = castToType<int>(snapshotData['age']);
+    _ailments = snapshotData['ailments'] as String?;
+    _location = snapshotData['location'] as LatLng?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
-    _gender = snapshotData['gender'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _userSex = snapshotData['userSex'] as String?;
+    _type = castToType<int>(snapshotData['type']);
+    _firstName = snapshotData['first_name'] as String?;
+    _lastName = snapshotData['last_name'] as String?;
+    _specialization = getDataList(snapshotData['specialization']);
   }
 
   static CollectionReference get collection =>
@@ -81,28 +132,96 @@ class UsersRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UsersRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UsersRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUsersRecordData({
   String? displayName,
-  String? uid,
-  DateTime? createdTime,
-  String? phoneNumber,
   String? email,
+  String? password,
+  String? uid,
+  int? age,
+  String? ailments,
+  LatLng? location,
+  String? phoneNumber,
   String? photoUrl,
-  String? gender,
+  DateTime? createdTime,
+  String? userSex,
+  int? type,
+  String? firstName,
+  String? lastName,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'display_name': displayName,
-      'uid': uid,
-      'created_time': createdTime,
-      'phone_number': phoneNumber,
       'email': email,
+      'password': password,
+      'uid': uid,
+      'age': age,
+      'ailments': ailments,
+      'location': location,
+      'phone_number': phoneNumber,
       'photo_url': photoUrl,
-      'gender': gender,
+      'created_time': createdTime,
+      'userSex': userSex,
+      'type': type,
+      'first_name': firstName,
+      'last_name': lastName,
     }.withoutNulls,
   );
 
   return firestoreData;
+}
+
+class UsersRecordDocumentEquality implements Equality<UsersRecord> {
+  const UsersRecordDocumentEquality();
+
+  @override
+  bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
+    return e1?.displayName == e2?.displayName &&
+        e1?.email == e2?.email &&
+        e1?.password == e2?.password &&
+        e1?.uid == e2?.uid &&
+        e1?.age == e2?.age &&
+        e1?.ailments == e2?.ailments &&
+        e1?.location == e2?.location &&
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.photoUrl == e2?.photoUrl &&
+        e1?.createdTime == e2?.createdTime &&
+        e1?.userSex == e2?.userSex &&
+        e1?.type == e2?.type &&
+        e1?.firstName == e2?.firstName &&
+        e1?.lastName == e2?.lastName &&
+        listEquality.equals(e1?.specialization, e2?.specialization);
+  }
+
+  @override
+  int hash(UsersRecord? e) => const ListEquality().hash([
+        e?.displayName,
+        e?.email,
+        e?.password,
+        e?.uid,
+        e?.age,
+        e?.ailments,
+        e?.location,
+        e?.phoneNumber,
+        e?.photoUrl,
+        e?.createdTime,
+        e?.userSex,
+        e?.type,
+        e?.firstName,
+        e?.lastName,
+        e?.specialization
+      ]);
+
+  @override
+  bool isValidKey(Object? o) => o is UsersRecord;
 }
